@@ -1,52 +1,144 @@
+// Axios
 import axios from 'axios';
+
+// Importing react hooks
 import React, { useState, useEffect } from 'react';
+
+// Importing style css
 import './App.css';
+
+// Importing swiper js
 import { Swiper, SwiperSlide } from 'swiper/react';
+// Import Swiper styles
 import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
+// Imposting swiper js components
+import { Pagination } from 'swiper';
+import { Navigation } from 'swiper';
+
+// Importing MUI components
+import Typography from '@mui/material/Typography';
 
 // Components
 import PopularMovies from './components/PopularMovies';
 import Navbar from './components/Navbar';
+import Trending from './components/Trending';
+
+const padding = {
+	padding: '1em',
+};
 
 function App() {
-	const [post, setPost] = useState(null);
+	const [postPopularMovies, setPostPopularMovies] = useState(null);
+	const [postTrending, setPostTrendring] = useState(null);
 
 	const API_KEY = `3774131603660110c024a22c82fb41fe`;
 
-	const baseURL = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
+	const trending_movies_url = `https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}`;
+	const popular_movies_url = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
 
 	useEffect(() => {
-		axios.get(baseURL).then((response) => {
-			setPost(response.data);
+		axios.get(popular_movies_url).then((response) => {
+			setPostPopularMovies(response.data);
+		});
+		axios.get(trending_movies_url).then((response) => {
+			setPostTrendring(response.data);
 		});
 	}, []);
 
-	if (!post) return null;
-	console.log(post.results);
+	if (!postTrending) return null;
+	if (!postPopularMovies) return null;
 
-	const popular_movies =
-		post.results.length > 0 ? (
-			<Swiper spaceBetween={200} slidesPerView={2}>
-				{post.results
+	console.log(postTrending.results);
+	const trending_movies =
+		postTrending.results.length > 0 ? (
+			<Swiper navigation={true} modules={[Navigation]}>
+				{postTrending.results
 					.filter((movie) => movie.poster_path)
 					.map((movie) => (
 						<SwiperSlide key={movie.id}>
-							<PopularMovies
+							<Trending
 								key={movie.id}
 								original_title={movie.original_title}
 								poster_path={movie.poster_path}
+								vote_average={movie.vote_average}
+								backdrop_path={movie.backdrop_path}
+								overview={movie.overview}
 							/>
 						</SwiperSlide>
 					))}
 			</Swiper>
 		) : (
-			<h2>No Movies</h2>
+			<Typography variant="h4">No Movies</Typography>
+		);
+
+	const popular_movies =
+		postPopularMovies.results.length > 0 ? (
+			<Swiper
+				style={padding}
+				className="swiper"
+				spaceBetween={15}
+				slidesPerView={1}
+				breakpoints={{
+					// when window width is >= 320px
+					320: {
+						slidesPerView: 2,
+					},
+					// when window width is >= 499px
+					499: {
+						slidesPerView: 3,
+					},
+					720: {
+						slidesPerView: 4,
+					},
+					1020: {
+						slidesPerView: 7,
+					},
+				}}
+				pagination={{
+					clickable: true,
+					type: 'progressbar',
+				}}
+				modules={[Pagination]}
+			>
+				{postPopularMovies.results
+					.filter((movie) => movie.poster_path)
+					.map((movie) => (
+						<SwiperSlide key={movie.id}>
+							<PopularMovies
+								key={movie.id}
+								original_title={movie.title}
+								poster_path={movie.poster_path}
+								vote_average={movie.vote_average}
+							/>
+						</SwiperSlide>
+					))}
+			</Swiper>
+		) : (
+			<Typography variant="h4">No Movies</Typography>
 		);
 
 	return (
 		<div className="App">
 			<Navbar />
-			<h3>Popular Movies</h3>
+			<Typography
+				variant="h5"
+				style={{ padding: '.5em', marginTop: '1em' }}
+				color="#fff"
+			>
+				Explore trending movies and series!
+			</Typography>
+			{trending_movies}
+
+			<Typography
+				variant="h5"
+				color="white"
+				style={{ padding: '.5em', marginTop: '1em' }}
+			>
+				Popular Movies
+			</Typography>
+
 			{popular_movies}
 		</div>
 	);
