@@ -24,15 +24,24 @@ function App() {
 	if (!post) return null;
 	console.log(post.results);
 
-	const popular_movies = post.results.map((movies) => {
-		return (
-			<PopularMovies
-				key={movies.id}
-				original_title={movies.original_title}
-				poster_path={movies.poster_path}
-			/>
+	const popular_movies =
+		post.results.length > 0 ? (
+			<Swiper spaceBetween={200} slidesPerView={2}>
+				{post.results
+					.filter((movie) => movie.poster_path)
+					.map((movie) => (
+						<SwiperSlide key={movie.id}>
+							<PopularMovies
+								key={movie.id}
+								original_title={movie.original_title}
+								poster_path={movie.poster_path}
+							/>
+						</SwiperSlide>
+					))}
+			</Swiper>
+		) : (
+			<h2>No Movies</h2>
 		);
-	});
 
 	return (
 		<div className="App">
