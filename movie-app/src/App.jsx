@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 
 // Components
 import PopularMovies from './components/PopularMovies';
@@ -22,13 +24,20 @@ function App() {
 	if (!post) return null;
 	console.log(post.results);
 
-	const popular_movies = post.results.map((item) => {
-		return <PopularMovies key={item.id} original_title={item.original_title} />;
+	const popular_movies = post.results.map((movies) => {
+		return (
+			<PopularMovies
+				key={movies.id}
+				original_title={movies.original_title}
+				poster_path={movies.poster_path}
+			/>
+		);
 	});
 
 	return (
 		<div className="App">
 			<Navbar />
+			<h3>Popular Movies</h3>
 			{popular_movies}
 		</div>
 	);
