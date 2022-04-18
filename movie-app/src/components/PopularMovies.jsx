@@ -1,7 +1,7 @@
-function PopularMovies() {
+function PopularMovies({ original_title }) {
 	return (
 		<div className="popular-movies">
-			<p>Movie title</p>
+			<p>{original_title}</p>
 		</div>
 	);
 }
