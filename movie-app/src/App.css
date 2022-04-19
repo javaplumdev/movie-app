@@ -40,13 +40,12 @@ body {
 }
 
 .movie-details {
-	bottom: 0;
-	margin: 1em;
+	top: 20%;
+
 	position: absolute;
 	display: flex;
-
-	left: 5%;
-	justify-content: center;
+	align-items: center;
+	left: 15%;
 }
 
 .poster-image {
@@ -55,5 +54,7 @@ body {
 }
 
 .movie-description {
+	margin-left: 2em;
 	color: #fff;
+	padding: 0.5em;
 }

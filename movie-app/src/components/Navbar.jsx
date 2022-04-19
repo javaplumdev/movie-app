@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import Button from '@mui/material/Button';
 
 const Search = styled('div')(({ theme }) => ({
 	position: 'relative',
@@ -55,7 +56,7 @@ const AppBarBG = {
 	backgroundColor: '#2d3135',
 };
 
-function Navbar() {
+function Navbar({ handleSearch, handleChange, holderSearch }) {
 	return (
 		<div className="navbar">
 			<Box sx={{ flexGrow: 1 }}>
@@ -85,8 +86,19 @@ function Navbar() {
 							<StyledInputBase
 								placeholder="Search a movie…"
 								inputProps={{ 'aria-label': 'search' }}
+								onChange={handleChange}
+								name="movieName"
+								value={holderSearch.movieName}
 							/>
 						</Search>
+						<Button
+							variant="contained"
+							color="primary"
+							style={{ marginLeft: '.5em' }}
+							onClick={handleSearch}
+						>
+							SEARCH
+						</Button>
 					</Toolbar>
 				</AppBar>
 			</Box>

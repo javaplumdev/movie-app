@@ -2,6 +2,9 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
+import Button from '@mui/material/Button';
 
 function Trending({
 	original_title,
@@ -19,7 +22,7 @@ function Trending({
 				component="img"
 				sx={{
 					width: '100%',
-					height: '300px',
+					height: '400px',
 					objectFit: 'fill',
 
 					'&:hover': {
@@ -30,19 +33,23 @@ function Trending({
 				src={image_path + backdrop_path}
 			/>
 
-			<div className="movie-details">
+			<Grid className="movie-details" maxWidth="md">
 				<div className="movie-poster">
 					<img src={image_path + poster_path} className="poster-image" />
 				</div>
-				<div className="movie-description">
-					<Typography variant="h5" style={{ marginLeft: '.5em' }}>
-						{original_title}
-					</Typography>
-					<Typography variant="body1" style={{ marginLeft: '.5em' }}>
-						{`${overview} `}
-					</Typography>
-				</div>
-			</div>
+
+				<Container
+					className="movie-description"
+					sx={{ display: { xs: 'none', sm: 'block' } }}
+					style={{ marginLeft: '.5em' }}
+				>
+					<Typography variant="h5">{original_title}</Typography>
+					<Typography variant="body1">{`${overview} `}</Typography>
+					{/* <Button variant="contained" style={{ marginTop: '1em' }}>
+						Watch
+					</Button> */}
+				</Container>
+			</Grid>
 			<Box />
 		</div>
 	);
