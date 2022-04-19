@@ -171,7 +171,7 @@ function App() {
 				<Container>
 					<Grid container spacing={4}>
 						{searchMovies.results.map((movie) => (
-							<Grid item xs={12} sm={6} md={4} lg={2} key={movie.id}>
+							<Grid item xs={12} sm={4} md={3} lg={2} key={movie.id}>
 								<ResultsMovie
 									key={movie.id}
 									original_title={movie.original_title}
@@ -181,6 +181,7 @@ function App() {
 							</Grid>
 						))}
 					</Grid>
+					<p>Pupolar Movies</p>
 				</Container>
 			) : (
 				<>
