@@ -10,6 +10,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import Button from '@mui/material/Button';
 
+// Component
+import App from '../App';
+
 const Search = styled('div')(({ theme }) => ({
 	position: 'relative',
 	borderRadius: theme.shape.borderRadius,
@@ -56,7 +59,7 @@ const AppBarBG = {
 	backgroundColor: '#2d3135',
 };
 
-function Navbar({ handleSearch, handleChange, holderSearch }) {
+function Navbar({ handleClick, handleChange, holderSearch }) {
 	return (
 		<div className="navbar">
 			<Box sx={{ flexGrow: 1 }}>
@@ -76,6 +79,7 @@ function Navbar({ handleSearch, handleChange, holderSearch }) {
 							noWrap
 							component="div"
 							sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+							style={{ cursor: 'pointer' }}
 						>
 							The Movie DB
 						</Typography>
@@ -95,7 +99,7 @@ function Navbar({ handleSearch, handleChange, holderSearch }) {
 							variant="contained"
 							color="primary"
 							style={{ marginLeft: '.5em' }}
-							onClick={handleSearch}
+							onClick={handleClick}
 						>
 							SEARCH
 						</Button>
