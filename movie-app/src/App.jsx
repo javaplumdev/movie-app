@@ -98,9 +98,10 @@ function App() {
 	const handleWatchFunction = (id) => {
 		postPopularMovies.results.map((movie) => {
 			if (id === movie.id) {
-				return (
-					<WatchMovies key={movie.id} original_title={movie.original_title} />
-				);
+				// return (
+				// 	<WatchMovies key={movie.id} original_title={movie.original_title} />
+				// );
+				console.log(movie);
 			}
 		});
 
