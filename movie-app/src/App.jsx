@@ -19,6 +19,7 @@ import { Navigation } from 'swiper';
 
 // Importing MUI components
 import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 
 // Components
@@ -167,15 +168,20 @@ function App() {
 			/>
 
 			{showResultMovies ? (
-				searchMovies.results.map((movie) => {
-					return (
-						<ResultsMovie
-							key={movie.id}
-							original_title={movie.original_title}
-							poster_path={movie.poster_path}
-						/>
-					);
-				})
+				<Container>
+					<Grid container spacing={4}>
+						{searchMovies.results.map((movie) => (
+							<Grid item xs={12} sm={6} md={4} lg={2} key={movie.id}>
+								<ResultsMovie
+									key={movie.id}
+									original_title={movie.original_title}
+									poster_path={movie.poster_path}
+									vote_average={movie.vote_average}
+								/>
+							</Grid>
+						))}
+					</Grid>
+				</Container>
 			) : (
 				<>
 					<Typography
