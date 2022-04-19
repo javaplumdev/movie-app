@@ -27,6 +27,7 @@ import PopularMovies from './components/PopularMovies';
 import Navbar from './components/Navbar';
 import Trending from './components/Trending';
 import ResultsMovie from './components/ResultsMovie';
+import WatchMovies from './components/WatchMovies';
 
 const padding = {
 	padding: '1em',
@@ -38,11 +39,13 @@ function App() {
 	const [searchMovies, setSearchMovies] = useState(null);
 	const [holderSearch, setHolderSearch] = useState({ movieName: '' });
 	const [showResultMovies, setShowResultMovies] = useState(false);
+	const [watchMovies, setWatchMovies] = useState(false);
 
 	const API_KEY = `3774131603660110c024a22c82fb41fe`;
 
-	const trending_movies_url = `https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}`;
-	const popular_movies_url = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
+	const trending_movies_url = `https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}&include_video=true`;
+	const popular_movies_url = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1&include_video=true`;
+	const discover_moves_url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate`;
 
 	const getMovieRequest = async (holderSearch) => {
 		const search_movies_url = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&page=1&include_adult=false&query=${holderSearch}`;
@@ -68,9 +71,10 @@ function App() {
 	if (!postPopularMovies) return null;
 
 	const handleClick = () => {
+		console.log(postPopularMovies.results);
+
 		if (holderSearch.movieName === '') {
 			alert('Please enter a movie');
-			console.log('Please enter a movie');
 		} else {
 			setShowResultMovies(true);
 		}
@@ -87,9 +91,21 @@ function App() {
 		});
 	};
 
-	// const show_results_function = () => {
+	const handleWatch = (id) => {
+		handleWatchFunction(id);
+	};
 
-	// };
+	const handleWatchFunction = (id) => {
+		postPopularMovies.results.map((movie) => {
+			if (id === movie.id) {
+				return (
+					<WatchMovies key={movie.id} original_title={movie.original_title} />
+				);
+			}
+		});
+
+		setWatchMovies(true);
+	};
 
 	const trending_movies =
 		postTrending.results.length > 0 ? (
@@ -105,6 +121,7 @@ function App() {
 								vote_average={movie.vote_average}
 								backdrop_path={movie.backdrop_path}
 								overview={movie.overview}
+								handleWatch={handleWatch}
 							/>
 						</SwiperSlide>
 					))}
@@ -148,9 +165,11 @@ function App() {
 						<SwiperSlide key={movie.id}>
 							<PopularMovies
 								key={movie.id}
+								movie_id={movie.id}
 								original_title={movie.title}
 								poster_path={movie.poster_path}
 								vote_average={movie.vote_average}
+								handleWatch={handleWatch}
 							/>
 						</SwiperSlide>
 					))}
@@ -169,14 +188,15 @@ function App() {
 
 			{showResultMovies ? (
 				<Container>
-					<Grid container spacing={4}>
+					<Grid container spacing={2}>
 						{searchMovies.results.map((movie) => (
-							<Grid item xs={12} sm={4} md={3} lg={2} key={movie.id}>
+							<Grid item xs={6} sm={4} md={3} lg={2} key={movie.id}>
 								<ResultsMovie
 									key={movie.id}
 									original_title={movie.original_title}
 									poster_path={movie.poster_path}
 									vote_average={movie.vote_average}
+									handleWatch={handleWatch}
 								/>
 							</Grid>
 						))}

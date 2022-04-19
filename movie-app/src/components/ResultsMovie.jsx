@@ -14,6 +14,7 @@ const designCard = {
 	justifyContent: 'space-between',
 	backgroundColor: '#2d3135',
 	color: '#fff',
+	marginTop: '2em',
 };
 
 const designButton = {
@@ -42,11 +43,11 @@ function ResultsMovie({ original_title, poster_path, vote_average }) {
 				/>
 			</div>
 			<CardContent>
-				<Typography gutterBottom variant="body1" component="div">
+				<Typography gutterBottom variant="caption" component="div">
 					{original_title}
 				</Typography>
-				<Button variant="contained" style={designButton}>
-					Watch now
+				<Button variant="contained" style={designButton} size="sm">
+					Watch
 				</Button>
 			</CardContent>
 		</Card>

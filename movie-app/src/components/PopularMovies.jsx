@@ -24,7 +24,13 @@ const designButton = {
 	cursor: 'pointer',
 };
 
-function PopularMovies({ original_title, poster_path, vote_average }) {
+function PopularMovies({
+	original_title,
+	poster_path,
+	vote_average,
+	handleWatch,
+	movie_id,
+}) {
 	const image_path = `https://image.tmdb.org/t/p/w342`;
 
 	return (
@@ -47,7 +53,11 @@ function PopularMovies({ original_title, poster_path, vote_average }) {
 					<Typography gutterBottom variant="body1" component="div">
 						{original_title}
 					</Typography>
-					<Button variant="contained" style={designButton}>
+					<Button
+						variant="contained"
+						style={designButton}
+						onClick={() => handleWatch(movie_id)}
+					>
 						Watch now
 					</Button>
 				</CardContent>
