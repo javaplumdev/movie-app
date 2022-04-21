@@ -100,7 +100,6 @@ function App() {
 
 	const handleWatch = (id) => {
 		handleWatchFunction(id);
-		console.log(discover_movies.results);
 	};
 
 	const handleWatchFunction = (id) => {
@@ -261,7 +260,8 @@ function App() {
 						Popular Movies
 					</Typography>
 
-					{popular_movies}
+					<div className="popular-movies">{popular_movies}</div>
+
 					{discover_movies}
 				</>
 			)}

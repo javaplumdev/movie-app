@@ -28,7 +28,7 @@ const flexBox = {
 	flexWrap: 'wrap',
 };
 
-function ResultsMovie({ original_title, poster_path, vote_average }) {
+function ResultsMovie({ original_title, poster_path }) {
 	const image_path = `https://image.tmdb.org/t/p/w342`;
 
 	return (
@@ -37,15 +37,12 @@ function ResultsMovie({ original_title, poster_path, vote_average }) {
 				<CardMedia
 					className="movie-poster"
 					component="img"
-					height="100%"
+					height="300px"
 					image={image_path + poster_path}
 					alt={poster_path}
 				/>
 			</div>
 			<CardContent>
-				<Typography gutterBottom variant="caption" component="div">
-					{original_title}
-				</Typography>
 				<Button variant="contained" style={designButton} size="sm">
 					Watch
 				</Button>

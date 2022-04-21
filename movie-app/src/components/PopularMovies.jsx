@@ -11,9 +11,6 @@ import StarRateIcon from '@mui/icons-material/StarRate';
 import Button from '@mui/material/Button';
 
 const designCard = {
-	display: 'flex',
-	flexDirection: 'column',
-	justifyContent: 'space-between',
 	backgroundColor: '#2d3135',
 	color: '#fff',
 };
@@ -34,13 +31,13 @@ function PopularMovies({
 	const image_path = `https://image.tmdb.org/t/p/w342`;
 
 	return (
-		<div className="popular-movies">
-			<Card sx={{ maxWidth: 200, height: 'auto' }} style={designCard}>
+		<div className="card-childs">
+			<Card sx={{ flexGrow: 1 }} style={designCard}>
 				<div className="movie-poster-holder">
 					<CardMedia
 						className="movie-poster"
 						component="img"
-						height="100%"
+						height="300px"
 						image={image_path + poster_path}
 						alt={poster_path}
 					/>
@@ -50,9 +47,6 @@ function PopularMovies({
 					</div>
 				</div>
 				<CardContent>
-					<Typography gutterBottom variant="body1" component="div">
-						{original_title}
-					</Typography>
 					<Button
 						variant="contained"
 						style={designButton}

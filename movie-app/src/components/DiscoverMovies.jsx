@@ -34,8 +34,8 @@ function DiscoverMovies({
 	const image_path = `https://image.tmdb.org/t/p/w342`;
 
 	return (
-		<div className="popular-movies">
-			<Card sx={{ maxWidth: 200, height: 'auto' }} style={designCard}>
+		<div className="discover-movies">
+			<Card sx={{ maxWidth: 200 }} style={designCard}>
 				<div className="movie-poster-holder">
 					<CardMedia
 						className="movie-poster"
