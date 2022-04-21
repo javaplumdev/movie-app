@@ -28,6 +28,7 @@ import Navbar from './components/Navbar';
 import Trending from './components/Trending';
 import ResultsMovie from './components/ResultsMovie';
 import WatchMovies from './components/WatchMovies';
+import DiscoverMovies from './components/DiscoverMovies';
 
 const padding = {
 	padding: '1em',
@@ -37,6 +38,8 @@ function App() {
 	const [postPopularMovies, setPostPopularMovies] = useState(null);
 	const [postTrending, setPostTrendring] = useState(null);
 	const [searchMovies, setSearchMovies] = useState(null);
+	const [discoverMovies, setDiscoverMovies] = useState(null);
+
 	const [holderSearch, setHolderSearch] = useState({ movieName: '' });
 	const [showResultMovies, setShowResultMovies] = useState(false);
 	const [watchMovies, setWatchMovies] = useState(false);
@@ -45,7 +48,8 @@ function App() {
 
 	const trending_movies_url = `https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}&include_video=true`;
 	const popular_movies_url = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1&include_video=true`;
-	const discover_moves_url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate`;
+
+	const discover_movies_url = `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_watch_monetization_types=flatrate`;
 
 	const getMovieRequest = async (holderSearch) => {
 		const search_movies_url = `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&language=en-US&page=1&include_adult=false&query=${holderSearch}`;
@@ -60,6 +64,9 @@ function App() {
 		});
 		axios.get(trending_movies_url).then((response) => {
 			setPostTrendring(response.data);
+		});
+		axios.get(discover_movies_url).then((response) => {
+			setDiscoverMovies(response.data);
 		});
 	}, []);
 
@@ -93,6 +100,7 @@ function App() {
 
 	const handleWatch = (id) => {
 		handleWatchFunction(id);
+		console.log(discover_movies.results);
 	};
 
 	const handleWatchFunction = (id) => {
@@ -107,6 +115,29 @@ function App() {
 
 		setWatchMovies(true);
 	};
+
+	const discover_movies =
+		discoverMovies.results.length > 0 ? (
+			<Swiper navigation={true} modules={[Navigation]}>
+				{discoverMovies.results
+					.filter((movie) => movie.poster_path)
+					.map((movie) => (
+						<SwiperSlide key={movie.id}>
+							<DiscoverMovies
+								key={movie.id}
+								original_title={movie.original_title}
+								poster_path={movie.poster_path}
+								vote_average={movie.vote_average}
+								backdrop_path={movie.backdrop_path}
+								overview={movie.overview}
+								handleWatch={handleWatch}
+							/>
+						</SwiperSlide>
+					))}
+			</Swiper>
+		) : (
+			<Typography variant="h4">No Movies</Typography>
+		);
 
 	const trending_movies =
 		postTrending.results.length > 0 ? (
@@ -158,7 +189,6 @@ function App() {
 					clickable: true,
 					type: 'progressbar',
 				}}
-				modules={[Pagination]}
 			>
 				{postPopularMovies.results
 					.filter((movie) => movie.poster_path)
@@ -202,7 +232,14 @@ function App() {
 							</Grid>
 						))}
 					</Grid>
-					<p>Pupolar Movies</p>
+					<Typography
+						variant="h5"
+						color="white"
+						style={{ padding: '.5em', marginTop: '1em' }}
+					>
+						Discover some movies!
+					</Typography>
+					{discover_movies}
 				</Container>
 			) : (
 				<>
@@ -225,6 +262,7 @@ function App() {
 					</Typography>
 
 					{popular_movies}
+					{discover_movies}
 				</>
 			)}
 		</div>

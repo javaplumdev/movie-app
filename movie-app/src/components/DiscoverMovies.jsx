@@ -24,7 +24,7 @@ const designButton = {
 	cursor: 'pointer',
 };
 
-function PopularMovies({
+function DiscoverMovies({
 	original_title,
 	poster_path,
 	vote_average,
@@ -66,4 +66,4 @@ function PopularMovies({
 	);
 }
 
-export default PopularMovies;
+export default DiscoverMovies;
