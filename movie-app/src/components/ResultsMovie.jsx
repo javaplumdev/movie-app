@@ -28,7 +28,7 @@ const flexBox = {
 	flexWrap: 'wrap',
 };
 
-function ResultsMovie({ original_title, poster_path }) {
+function ResultsMovie({ poster_path }) {
 	const image_path = `https://image.tmdb.org/t/p/w342`;
 
 	return (

@@ -117,7 +117,32 @@ function App() {
 
 	const discover_movies =
 		discoverMovies.results.length > 0 ? (
-			<Swiper navigation={true} modules={[Navigation]}>
+			<Swiper
+				style={padding}
+				className="swiper"
+				spaceBetween={15}
+				slidesPerView={1}
+				breakpoints={{
+					// when window width is >= 320px
+					320: {
+						slidesPerView: 2,
+					},
+					// when window width is >= 499px
+					499: {
+						slidesPerView: 3,
+					},
+					720: {
+						slidesPerView: 4,
+					},
+					1020: {
+						slidesPerView: 7,
+					},
+				}}
+				pagination={{
+					clickable: true,
+					type: 'progressbar',
+				}}
+			>
 				{discoverMovies.results
 					.filter((movie) => movie.poster_path)
 					.map((movie) => (
@@ -262,6 +287,13 @@ function App() {
 
 					<div className="popular-movies">{popular_movies}</div>
 
+					<Typography
+						variant="h5"
+						color="white"
+						style={{ padding: '.5em', marginTop: '1em' }}
+					>
+						Discover some movies
+					</Typography>
 					{discover_movies}
 				</>
 			)}
